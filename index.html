@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Database Comparison</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; padding: 20px; background-color: #f8f9fa; }
+        h1, h2, h3 { color: #2c3e50; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background: #3498db; color: white; }
+        pre { background: #eef; padding: 10px; border-left: 4px solid #3498db; overflow-x: auto; border-radius: 5px; }
+        .container { max-width: 900px; margin: auto; padding: 20px; background: white; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Comparison of SQL Databases</h1>
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>MariaDB</th>
+                <th>MySQL</th>
+                <th>MS SQL</th>
+                <th>Oracle DB</th>
+            </tr>
+            <tr>
+                <td>Open Source</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>Best For</td>
+                <td>High Performance</td>
+                <td>General Purpose</td>
+                <td>Enterprise & Windows</td>
+                <td>Enterprise & Scalability</td>
+            </tr>
+            <tr>
+                <td>Stored Procedures</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>Replication Support</td>
+                <td>Master-Master & Master-Slave</td>
+                <td>Master-Slave</td>
+                <td>Transactional Replication</td>
+                <td>Advanced Data Guard</td>
+            </tr>
+            <tr>
+                <td>Transaction Support</td>
+                <td>Yes (InnoDB, Aria)</td>
+                <td>Yes (InnoDB)</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>JSON Support</td>
+                <td>Yes</td>
+                <td>Yes</td>
+                <td>Yes (as XML)</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>Security Features</td>
+                <td>Encryption, Role-based Access</td>
+                <td>SSL, Authentication Plugins</td>
+                <td>Row-Level Security, Always Encrypted</td>
+                <td>Advanced User Management, TDE</td>
+            </tr>
+        </table>
+
+        <h2>Unique SQL Queries</h2>
+        
+        <h3>MariaDB - Virtual Columns</h3>
+        <pre>
+CREATE TABLE employees (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    salary DECIMAL(10,2),
+    annual_salary DECIMAL(10,2) AS (salary * 12) STORED
+);
+        </pre>
+
+        <h3>MySQL - JSON Data Handling</h3>
+        <pre>
+SELECT name, info->>'$.address.city' AS city 
+FROM users;
+        </pre>
+
+        <h3>MS SQL - CTE (Common Table Expression)</h3>
+        <pre>
+WITH EmployeeCTE AS (
+    SELECT id, name, salary FROM employees WHERE salary > 50000
+)
+SELECT * FROM EmployeeCTE;
+        </pre>
+
+        <h3>Oracle DB - PL/SQL Block</h3>
+        <pre>
+DECLARE 
+    v_name VARCHAR2(50);
+BEGIN 
+    SELECT name INTO v_name FROM employees WHERE id = 1;
+    DBMS_OUTPUT.PUT_LINE(v_name);
+END;
+        </pre>
+
+        <h3>Oracle DB - Hierarchical Queries</h3>
+        <pre>
+SELECT employee_id, manager_id, LEVEL
+FROM employees
+START WITH manager_id IS NULL
+CONNECT BY PRIOR employee_id = manager_id;
+        </pre>
+    </div>
+</body>
+</html>
